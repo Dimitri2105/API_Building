@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const stateModal = new Schema({
-    stateName : {
+    statename : {
         type : String,
         required : true
     }

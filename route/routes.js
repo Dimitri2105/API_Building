@@ -6,7 +6,8 @@ const User = require("../modals/userModal");
 const State = require('../modals/stateModal')
 const District = require('../modals/districtModal')
 
-const authentication = require('../middleware/auth')
+const authentication = require('../middleware/auth');
+const { ObjectId } = require("mongodb");
 
 const Router = express.Router();
 
@@ -100,7 +101,7 @@ Router.post('/API/create-state' , async (req,res,next) =>{
     return res.status(400).json({ message: "State Name already exists" });
   }
     const state = new State({
-      statename
+      statename,
     })
 
     await state.save()
@@ -118,12 +119,26 @@ Router.post('/API/create-state' , async (req,res,next) =>{
   }
 })
 
-Router.get('/API/get-district/' , async(req,res,next) =>{
+Router.get('/API/get-district' , async(req,res,next) =>{
   try{
-    console.log("HERE>>>>>>>>>>>>>.")
-    const {state_id} = req.params
-    console.log(req.params)
+    const {state_id} = req.query
     console.log("statedID >>>>>> ", state_id)
+
+    if(!state_id){
+      return res.status(400).json({ message : "State ID missing"})
+    }
+
+    const district = await District.find( { State_id : ObjectId(state_id)})
+
+    res.status(200).json( {
+      success: true,
+      message : "District Detail",
+      timeStamp : new Date(),
+      Districts : district
+
+    })
+
+
 
   }
   catch (error) {

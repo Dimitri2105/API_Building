@@ -9,7 +9,9 @@ const districtSchema = new Schema({
     },
 
     State_id : {
-        type : mongoose.Schema.Types.ObjectId,
+        // type : mongoose.Schema.Types.ObjectId,
+        type : Number,
+        ref : "State",
         required : true
     }
 })

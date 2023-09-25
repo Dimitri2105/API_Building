@@ -10,7 +10,7 @@ var counter = mongoose.model('counter', CounterSchema);
 
 
 const stateModal = new Schema({
-    stateId: {type: String},
+    id: {type: Number},
     
     statename : {
         type : String,
@@ -21,8 +21,7 @@ const stateModal = new Schema({
 stateModal.pre('save', function(next) {
     var doc = this;
     counter.findByIdAndUpdate({_id: 'entityId'}, {$inc: { seq: 1} }, {new: true, upsert: true}).then(function(count) {
-        console.log("...count: "+JSON.stringify(count));
-        doc.stateId = count.seq;
+        doc.id = count.seq;
         next();
     })
     .catch(function(error) {

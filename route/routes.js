@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../modals/userModal");
+const State = require('../modals/stateModal')
+
 const authentication = require('../middleware/auth')
 
 const Router = express.Router();
@@ -59,6 +61,27 @@ Router.get('/API/logOut' , authentication.authenticate , async(req,res,next) =>{
         res.status(400).json({ error: error });
       }
 
+})
+
+Router.get('/API/get-state' , async(req,res,next) =>{
+  try{
+    const states = await State.find({})
+    if (!states){
+      return res.status(400).json({message : 'No states to be Found'})
+    }
+
+    res.status(200).json({
+      message : "State Detail",
+      timeStamp : new Date(),
+      states : states,
+
+    })
+
+  }
+  catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error });
+  }
 })
 
 

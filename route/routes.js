@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../modals/userModal");
 const State = require('../modals/stateModal')
+const District = require('../modals/districtModal')
 
 const authentication = require('../middleware/auth')
 
@@ -117,5 +118,18 @@ Router.post('/API/create-state' , async (req,res,next) =>{
   }
 })
 
+Router.get('/API/get-district/' , async(req,res,next) =>{
+  try{
+    console.log("HERE>>>>>>>>>>>>>.")
+    const {state_id} = req.params
+    console.log(req.params)
+    console.log("statedID >>>>>> ", state_id)
+
+  }
+  catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error });
+  }
+})
 
 module.exports = Router;

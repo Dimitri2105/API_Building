@@ -34,9 +34,10 @@ const childModal = new Schema({
     ref: "District",
     required: true,
   },
-//   photo : {
-//     type : link
-//   }
+  isActive : {
+    type : String,
+  }
+
 });
 
 childModal.pre('save', function(next) {

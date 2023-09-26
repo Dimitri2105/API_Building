@@ -22,6 +22,9 @@ const districtSchema = new Schema({
         type : Number,
         ref : "State",
         required : true
+    },
+    isActive : {
+        type : String,
     }
 })
 

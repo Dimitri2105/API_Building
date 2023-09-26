@@ -55,3 +55,36 @@ exports.getDistricts =  async (req, res, next) => {
       res.status(400).json({ error: error });
     }
   }
+
+  exports.updateDistrict = async(req,res,next) =>{
+    try{
+        const {id} = req.query
+        const { districtName } = req.body;
+
+        if (!id) {
+            return res.status(400).json({ messsage: "Missing state Id" });
+          }
+          if (!districtName) {
+            return res.status(400).json({ messsage: "Missing Statename" });
+          }
+      
+          const district = await District.findOne({ id: id });
+      
+          const updatedDistrict = await District.updateOne(
+            { _id: district._id },
+            { districtName: districtName }
+          );
+      
+          res.status(200).json({
+            message: "Success",
+            districtName: updatedDistrict,
+          });
+
+
+    }
+    catch (error) {
+        console.log(error);
+        res.status(400).json({ error: error });
+      }
+    
+  }

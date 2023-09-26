@@ -8,4 +8,6 @@ Router.get("/API/get-child",childController.getChild);
   
 Router.post("/API/create-child",childController.createChild);
 
+Router.post("/API/update-child" ,childController.updateChild)
+
 module.exports = Router

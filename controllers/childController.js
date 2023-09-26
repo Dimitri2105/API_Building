@@ -35,7 +35,7 @@ exports.createChild = async (req, res, next) => {
       father_name,
       mother_name,
       district_id,
-      isActive : true
+      isActive: true,
     });
 
     await child.save();
@@ -45,6 +45,44 @@ exports.createChild = async (req, res, next) => {
       status: 200,
       message: "Child created Successfully",
       child: child,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error });
+  }
+};
+
+exports.updateChild = async (req, res, next) => {
+  try {
+    const { id } = req.query;
+
+    const { name, sex, dob, father_name, mother_name, district_id } = req.body;
+
+    if (!id) {
+      return res.status(400).json({ messsage: "Missing state Id" });
+    }
+
+    if (
+      name.length === 0 ||
+      sex.length === 0 ||
+      dob.length === 0 ||
+      father_name.length === 0 ||
+      mother_name.length === 0 ||
+      !district_id
+    ) {
+      return res.status(400).json({ messsage: "Missing Some fields !!! " });
+    }
+
+    const child = await Child.findOne({ id: id });
+
+    const updatedChild = await Child.updateOne(
+      { _id: child._id },
+      { name, sex, dob, father_name, mother_name, district_id }
+    );
+
+    res.status(200).json({
+      message: "Success",
+      statename: updatedChild,
     });
   } catch (error) {
     console.log(error);

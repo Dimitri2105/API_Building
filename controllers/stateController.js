@@ -21,7 +21,7 @@ exports.createState = async (req, res, next) => {
   try {
     const { statename } = req.body;
 
-    if (!statename) {
+    if (statename.length === 0) {
       return res.status(200).json({ message: "State Name absent" });
     }
 

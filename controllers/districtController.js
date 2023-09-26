@@ -88,3 +88,26 @@ exports.getDistricts =  async (req, res, next) => {
       }
     
   }
+  exports.removeDistrict = async (req, res, next) => {
+    try {
+      const { id } = req.query;
+  
+      if (!id) {
+        return res.status(400).json({ messsage: "Missing state Id" });
+      }
+      const district = await District.findOne({ id: id });
+  
+      const removedDistrict = await District.updateOne(
+        { _id: district._id },
+        { isActive: false }
+      );
+      res.status(200).json({
+        message: "Success",
+        district: removedDistrict,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({ error: error });
+    }
+  };
+  

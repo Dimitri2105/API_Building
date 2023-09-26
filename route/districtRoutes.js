@@ -10,4 +10,6 @@ Router.post("/API/create-district", districtController.createDistrict);
 
 Router.post('/API/update-district' , districtController.updateDistrict)
 
+Router.post('/API/remove-district' , districtController.removeDistrict)
+
 module.exports = Router

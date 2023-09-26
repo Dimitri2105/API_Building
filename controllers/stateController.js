@@ -76,3 +76,26 @@ exports.updateState = async (req, res, next) => {
     res.status(400).json({ error: error });
   }
 };
+
+exports.removeState = async (req, res, next) => {
+  try {
+    const { stateId } = req.query;
+
+    if (!stateId) {
+      return res.status(400).json({ messsage: "Missing state Id" });
+    }
+    const state = await State.findOne({ id: stateId });
+
+    const removedState = await State.updateOne(
+      { _id: state._id },
+      { isActive: false }
+    );
+    res.status(200).json({
+      message: "Success",
+      statename: removedState,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error });
+  }
+};

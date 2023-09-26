@@ -10,4 +10,6 @@ Router.post("/API/create-state",stateController.createState );
 
 Router.post("/API/update-state" , stateController.updateState)
 
+Router.post("/API/remove-state" , stateController.removeState)
+
 module.exports = Router;

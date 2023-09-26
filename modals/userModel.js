@@ -11,9 +11,10 @@ const userSchema = new Schema ({
         type : String,
         required : true
     },
-    // lastActive : {
-    //     type : Date
-    // }
+    lastActive : {
+        type : String,
+        required : true
+    }
     
 
 })

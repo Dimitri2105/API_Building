@@ -1,0 +1,1 @@
+const Child = require("../modals/childModel");

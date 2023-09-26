@@ -14,7 +14,6 @@ const stateModal = new Schema({
     },
     isActive : {
         type : String,
-        required : true
     }
 })
 

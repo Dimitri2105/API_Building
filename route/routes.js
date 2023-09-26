@@ -140,4 +140,33 @@ Router.get("/API/get-district", async (req, res, next) => {
   }
 });
 
+Router.post("/API/create-district", async (req, res, next) => {
+  try {
+    const { State_id, districtName } = req.body;
+
+    if (!State_id || !districtName) {
+      return res
+        .status(400)
+        .json({ message: "State ID or District Name missing" });
+    }
+
+    const district = new District({
+      State_id,
+      districtName,
+    });
+
+    await district.save();
+
+    res.status(200).json({
+      success: false,
+      status: 200,
+      message: "District created Successfully",
+      district: district,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error });
+  }
+});
+
 module.exports = Router;

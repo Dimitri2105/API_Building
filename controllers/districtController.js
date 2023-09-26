@@ -10,7 +10,7 @@ exports.getDistricts =  async (req, res, next) => {
   
       const district = await District.find({ State_id: state_id , isActive : true } );
   
-      if (!district) {
+      if (district.length === 0 ) {
         return res.status(400).json({ message: "Cannot Find State" });
       }
   

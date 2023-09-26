@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const counter = require('./counterModal')
+const counter = require('./counterModel')
 
 
 const Schema = mongoose.Schema

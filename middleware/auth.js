@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const User = require("../modals/userModal");
+const User = require("../modals/userModel");
 
 exports.authenticate = async (req, res, next) => {
   const token = req.headers.authorization;

@@ -2,10 +2,10 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const User = require("../modals/userModal");
-const State = require("../modals/stateModal");
-const District = require("../modals/districtModal");
-const Child = require("../modals/childModal");
+const User = require("../modals/userModel");
+const State = require("../modals/stateModel");
+const District = require("../modals/districtModel");
+const Child = require("../modals/childModel");
 
 const authentication = require("../middleware/auth");
 const { ObjectId } = require("mongodb");

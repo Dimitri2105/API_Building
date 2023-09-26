@@ -11,6 +11,10 @@ const stateModal = new Schema({
     statename : {
         type : String,
         required : true
+    },
+    isActive : {
+        type : String,
+        required : true
     }
 })
 

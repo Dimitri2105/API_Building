@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 
 const routes = require('./route/routes')
 const userRoutes = require('./route/userRoutes')
+const stateRoutes = require('./route/stateRoutes')
 
 const app = express()
 
@@ -13,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // app.use(routes)
 app.use(userRoutes)
+app.use(stateRoutes)
 
 mongoose
 .connect('mongodb+srv://karannewuser:fEmZhME5inEdMBMv@cluster0.knsqu0p.mongodb.net/API_BUILDING?retryWrites=true&w=majority')

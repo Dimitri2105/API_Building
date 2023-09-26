@@ -6,6 +6,7 @@ const routes = require('./route/routes')
 const userRoutes = require('./route/userRoutes')
 const stateRoutes = require('./route/stateRoutes')
 const districtRoutes = require('./route/districtRoutes')
+const childRoutes = require('./route/childRoutes')
 
 const app = express()
 
@@ -17,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(userRoutes)
 app.use(stateRoutes)
 app.use(districtRoutes)
+app.use(childRoutes)
 
 mongoose
 .connect('mongodb+srv://karannewuser:fEmZhME5inEdMBMv@cluster0.knsqu0p.mongodb.net/API_BUILDING?retryWrites=true&w=majority')

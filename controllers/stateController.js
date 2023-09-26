@@ -3,7 +3,7 @@ const State = require("../modals/stateModel");
 exports.getStates = async (req, res, next) => {
   try {
     const states = await State.find({ isActive: true });
-    if (!states) {
+    if (!states.length === 0) {
       return res.status(400).json({ message: "No states to be Found" });
     }
 
@@ -21,7 +21,7 @@ exports.createState = async (req, res, next) => {
   try {
     const { statename } = req.body;
 
-    if (!statename) {
+    if (statename.length === 0) {
       return res.status(200).json({ message: "State Name absent" });
     }
 

@@ -1,17 +1,33 @@
-const express = require('express')
+const express = require("express");
 
-const childController = require('../controllers/childController')
+const childController = require("../controllers/childController");
 
-const authentication = require('../middleware/auth')
+const authentication = require("../middleware/auth");
 
-const Router = express.Router()
+const Router = express.Router();
 
-Router.get("/API/get-child",authentication.authenticate, childController.getChild);
-  
-Router.post("/API/create-child",authentication.authenticate, childController.createChild);
+Router.get(
+  "/API/get-child",
+  authentication.authenticate,
+  childController.getChild
+);
 
-Router.post("/API/update-child" ,authentication.authenticate,childController.updateChild)
+Router.post(
+  "/API/create-child",
+  authentication.authenticate,
+  childController.createChild
+);
 
-Router.post("/API/remove-child", authentication.authenticate,childController.removeChild)
+Router.post(
+  "/API/update-child",
+  authentication.authenticate,
+  childController.updateChild
+);
 
-module.exports = Router
+Router.post(
+  "/API/remove-child",
+  authentication.authenticate,
+  childController.removeChild
+);
+
+module.exports = Router;

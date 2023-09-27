@@ -13,7 +13,6 @@ const userSchema = new Schema ({
     },
     lastActive : {
         type : String,
-        required : true
     }
     
 

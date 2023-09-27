@@ -4,21 +4,29 @@ const jwt = require("jsonwebtoken");
 const User = require("../modals/userModel");
 
 exports.authenticate = async (req, res, next) => {
-  const token = req.headers.authorization;
-
-  const decodedToken = jwt.verify(token, "123456789");
-
   try {
-    const userFound = await User.findById(decodedToken.userId);
+    const token = req.headers.authorization;
 
-    if (!userFound) {
+    const decodedToken = jwt.verify(token, "123456789");
+
+    const userFound = await User.findById(decodedToken.userId);
+    console.log("user found is >>>>><<<", this.isEmpty(userFound));
+
+    if (this.isEmpty(userFound) === true) {
       return res.status(400).json({ message: "User Not Found" });
     }
-
-    req.user = userFound;
-    next();
+    if (userFound.lastActive === "true") {
+      req.user = userFound;
+      next();
+    } else {
+      return res.status(400).json({ message: "User is inactive" });
+    }
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: error });
   }
+};
+
+exports.isEmpty = (obj) => {
+  return Object.keys(obj).length === 0;
 };

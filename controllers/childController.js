@@ -89,3 +89,28 @@ exports.updateChild = async (req, res, next) => {
     res.status(400).json({ error: error });
   }
 };
+
+exports.removeChild = async(req,res,next) =>{
+  try{
+    const { id } = req.query;
+
+    if (!id) {
+      return res.status(400).json({ messsage: "Missing child Id" });
+    }
+    const child = await Child.findOne({ id: id });
+
+    const removedChild = await Child.updateOne(
+      { _id: child._id },
+      { isActive: false }
+    );
+    res.status(200).json({
+      success: true,
+      message : "Child removed successfully",
+      child: removedChild,
+    });
+
+  }catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error });
+  }
+}

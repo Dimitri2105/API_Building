@@ -68,7 +68,8 @@ exports.updateState = async (req, res, next) => {
     );
 
     res.status(200).json({
-      message: "Success",
+      success: true,
+      message : "State removed successfully",
       statename: updatedState,
     });
   } catch (error) {

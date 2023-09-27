@@ -9,6 +9,10 @@ exports.authenticate = async (req, res, next) => {
 
     const decodedToken = jwt.verify(token, "123456789");
 
+    if(!token || !decodedToken){
+      return res.status(200).json({ message : "Token Not Verified" , success : false})
+    }
+
     const userFound = await User.findById(decodedToken.userId);
 
     if (this.isEmpty(userFound) === true) {

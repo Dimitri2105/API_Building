@@ -5,32 +5,28 @@ exports.getallChild = async (req, res, next) => {
   try {
     const { id } = req.query;
 
+    var result;
+
     if (id) {
-      const child = await Child.find({ id: id, isActive: true });
+      let child = await Child.findOne({ id: id, isActive: true });
       if (!child) {
         throw error("No child data to be Found");
       }
-
-      res.status(200).json({
-        success: true,
-        message: "Child Profile Detail",
-        timeStamp: moment().unix(),
-        data: child,
-      });
+      result = child;
     } else {
-      const child = await Child.find({ isActive: true });
+      let child = await Child.find({ isActive: true });
+      result = child;
 
       if (child.length === 0) {
         throw error("No child data to be Found");
       }
-
-      res.status(200).json({
-        success: true,
-        message: "Child Profile Detail",
-        timeStamp: moment().unix(),
-        data: child,
-      });
     }
+    res.status(200).json({
+      success: true,
+      message: "Child Profile Detail",
+      timeStamp: moment().unix(),
+      data: result,
+    });
   } catch (error) {
     console.log(error);
     res.status(400).json({ success: false, message: error.message });
@@ -44,7 +40,7 @@ exports.getOneChild = async (req, res, next) => {
     if (!id) {
       throw error("Missing Id");
     }
-    const child = await Child.find({ id: id, isActive: true });
+    const child = await Child.findOne({ id: id, isActive: true });
 
     if (!child) {
       throw error("No child data to be Found");

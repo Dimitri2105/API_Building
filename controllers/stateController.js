@@ -1,10 +1,11 @@
 const State = require("../modals/stateModel");
+const moment = require('moment')
 
 exports.getStates = async (req, res, next) => {
   try {
     const states = await State.find({ isActive: true });
     if (!states.length === 0) {
-      throw Error ("No states to be Found" )
+      throw error ("No states to be Found" )
     }
 
     res.status(200).json({
@@ -23,13 +24,13 @@ exports.createState = async (req, res, next) => {
     const { statename } = req.body;
 
     if (statename.length === 0) {
-      throw Error("State Name absent")
+      throw error("State Name absent")
     }
 
     const existingState = await State.findOne({ statename });
 
     if (existingState) {
-      throw Error("State Name already exists")
+      throw error("State Name already exists")
     }
     const state = new State({
       statename,
@@ -57,10 +58,10 @@ exports.updateState = async (req, res, next) => {
     const { statename } = req.body;
 
     if (!stateId) {
-      throw Error("Missing state Id")
+      throw error("Missing state Id")
     }
     if (!statename) {
-      throw Error("Missing Statename")
+      throw error("Missing Statename")
     }
 
     const state = await State.findOne({ id: stateId });
@@ -87,7 +88,7 @@ exports.removeState = async (req, res, next) => {
     const { stateId } = req.query;
 
     if (!stateId) {
-      throw Error("Missing state Id")
+      throw error("Missing state Id")
     }
     const state = await State.findOne({ id: stateId });
 

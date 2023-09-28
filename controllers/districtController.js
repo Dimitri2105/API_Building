@@ -1,11 +1,12 @@
 const District = require("../modals/districtModel");
+const moment = require('moment')
 
 exports.getDistricts = async (req, res, next) => {
   try {
     const { state_id } = req.query;
 
     if (!state_id) {
-      throw Error("State ID missing")
+      throw error("State ID missing")
     }
 
     const district = await District.find({
@@ -14,7 +15,7 @@ exports.getDistricts = async (req, res, next) => {
     });
 
     if (district.length === 0) {
-      throw Error("Cannot Find State")
+      throw error("Cannot Find State")
     }
 
     res.status(200).json({
@@ -34,7 +35,7 @@ exports.createDistrict = async (req, res, next) => {
     const { State_id, districtName } = req.body;
 
     if (!State_id || !districtName) {
-        throw Error("State ID or District Name missing")
+        throw error("State ID or District Name missing")
     }
 
     const district = new District({
@@ -63,10 +64,10 @@ exports.updateDistrict = async (req, res, next) => {
     const { districtName } = req.body;
 
     if (!id) {
-      throw Error("Missing state Id")
+      throw error("Missing state Id")
     }
     if (!districtName) {
-      throw Error ("Missing Statename")
+      throw error ("Missing Statename")
     }
 
     const district = await District.findOne({ id: id });
@@ -93,7 +94,7 @@ exports.removeDistrict = async (req, res, next) => {
     const { id } = req.query;
 
     if (!id) {
-      throw Error("Missing Id")
+      throw error("Missing Id")
     }
     const district = await District.findOne({ id: id });
 

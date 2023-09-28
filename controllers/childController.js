@@ -1,11 +1,53 @@
 const Child = require("../modals/childModel");
+const moment = require("moment");
 
-exports.getChild = async (req, res, next) => {
+exports.getallChild = async (req, res, next) => {
   try {
-    const child = await Child.find({ isActive: true });
+    const { id } = req.query;
 
-    if (child.length === 0) {
-      throw Error ("No child data to be Found")
+    if (id) {
+      const child = await Child.find({ id: id, isActive: true });
+      if (!child) {
+        throw error("No child data to be Found");
+      }
+
+      res.status(200).json({
+        success: true,
+        message: "Child Profile Detail",
+        timeStamp: moment().unix(),
+        data: child,
+      });
+    } else {
+      const child = await Child.find({ isActive: true });
+
+      if (child.length === 0) {
+        throw error("No child data to be Found");
+      }
+
+      res.status(200).json({
+        success: true,
+        message: "Child Profile Detail",
+        timeStamp: moment().unix(),
+        data: child,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+exports.getOneChild = async (req, res, next) => {
+  try {
+    const { id } = req.query;
+
+    if (!id) {
+      throw error("Missing Id");
+    }
+    const child = await Child.find({ id: id, isActive: true });
+
+    if (!child) {
+      throw error("No child data to be Found");
     }
 
     res.status(200).json({
@@ -16,7 +58,7 @@ exports.getChild = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({success : false , message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
@@ -25,7 +67,7 @@ exports.createChild = async (req, res, next) => {
     const { name, sex, dob, father_name, mother_name, district_id } = req.body;
 
     if (!name || !sex || !dob || !father_name || !mother_name) {
-      throw Error( "All fields are required ")
+      throw error("All fields are required ");
     }
 
     const child = new Child({
@@ -43,12 +85,12 @@ exports.createChild = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "Child created Successfully",
-      timeStamp : moment().unix(),
+      timeStamp: moment().unix(),
       data: child,
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({success : false , message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
@@ -59,7 +101,7 @@ exports.updateChild = async (req, res, next) => {
     const { name, sex, dob, father_name, mother_name, district_id } = req.body;
 
     if (!id) {
-      throw Error ("Missing Id")
+      throw error("Missing Id");
     }
 
     if (
@@ -70,7 +112,7 @@ exports.updateChild = async (req, res, next) => {
       mother_name.length === 0 ||
       !district_id
     ) {
-      throw Error ("Missing Some fields !!! ")
+      throw error("Missing Some fields !!! ");
     }
 
     const child = await Child.findOne({ id: id });
@@ -81,23 +123,23 @@ exports.updateChild = async (req, res, next) => {
     );
 
     res.status(200).json({
-      success : true,
+      success: true,
       message: "Child updated successfully",
-      timeStamp : moment().unix(),
+      timeStamp: moment().unix(),
       data: updatedChild,
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({success : false , message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
-exports.removeChild = async(req,res,next) =>{
-  try{
+exports.removeChild = async (req, res, next) => {
+  try {
     const { id } = req.query;
 
     if (!id) {
-      throw Error ("Missing child Id")
+      throw error("Missing child Id");
     }
     const child = await Child.findOne({ id: id });
 
@@ -107,13 +149,12 @@ exports.removeChild = async(req,res,next) =>{
     );
     res.status(200).json({
       success: true,
-      message : "Child removed successfully",
+      message: "Child removed successfully",
       data: removedChild,
-      timeStamp : moment().unix()
+      timeStamp: moment().unix(),
     });
-
-  }catch (error) {
+  } catch (error) {
     console.log(error);
-    res.status(400).json({success : false , message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
-}
+};

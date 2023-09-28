@@ -6,7 +6,9 @@ const authentication = require('../middleware/auth')
 
 const Router = express.Router()
 
-Router.get("/API/get-child",authentication.authenticate, childController.getChild);
+Router.get("/API/get-child",authentication.authenticate, childController.getallChild);
+
+Router.get('/API/get-one-child' , authentication.authenticate , childController.getOneChild)
   
 Router.post("/API/create-child",authentication.authenticate, childController.createChild);
 

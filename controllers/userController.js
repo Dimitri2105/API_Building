@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const moment = require('moment')
 
 const User = require("../modals/userModel");
 
@@ -9,7 +10,7 @@ exports.logIn = async (req, res, next) => {
   const existingUser = await User.findOne({ username });
 
   if (existingUser) {
-    throw Error("User already created")
+    throw error ("User already created")
   }
   try {
     const hashedPassword = await bcrypt.hash(password, 10);

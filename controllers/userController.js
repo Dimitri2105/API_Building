@@ -9,7 +9,7 @@ exports.logIn = async (req, res, next) => {
   const existingUser = await User.findOne({ username });
 
   if (existingUser) {
-    return res.status(400).json({ message: "User already created" });
+    throw Error("User already created")
   }
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -29,16 +29,17 @@ exports.logIn = async (req, res, next) => {
     );
 
     res.status(200).json({
-      success: "true",
+      success: true,
       message: "User logged in !!! ",
       token: token,
-      newUser: newUser,
+      data: newUser,
       loginId: newUser._id,
       lastActive: newUser.lastActive,
+      timeStamp : moment().unix()
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: error });
+    res.status(400).json({success : false , message: error.message });
   }
 };
 
@@ -49,12 +50,13 @@ exports.logOut = async (req, res, next) => {
     });
 
     res.status(200).json({
-      success: "true",
+      success: true,
       message: "User logged out !!! ",
-      User: loggedOutUser,
+      data: loggedOutUser,
+      timeStamp : moment().unix()
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: error });
+    res.status(400).json({ error: error.message });
   }
 };

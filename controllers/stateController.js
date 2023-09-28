@@ -4,17 +4,18 @@ exports.getStates = async (req, res, next) => {
   try {
     const states = await State.find({ isActive: true });
     if (!states.length === 0) {
-      return res.status(400).json({ message: "No states to be Found" });
+      throw Error ("No states to be Found" )
     }
 
     res.status(200).json({
+      success : true,
       message: "State Detail",
-      timeStamp: new Date(),
-      states: states,
+      timeStamp : moment().unix(),
+      data: states,
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: error });
+    res.status(400).json({success : false , message: error.message });
   }
 };
 exports.createState = async (req, res, next) => {
@@ -22,13 +23,13 @@ exports.createState = async (req, res, next) => {
     const { statename } = req.body;
 
     if (statename.length === 0) {
-      return res.status(200).json({ message: "State Name absent" });
+      throw Error("State Name absent")
     }
 
     const existingState = await State.findOne({ statename });
 
     if (existingState) {
-      return res.status(400).json({ message: "State Name already exists" });
+      throw Error("State Name already exists")
     }
     const state = new State({
       statename,
@@ -38,12 +39,14 @@ exports.createState = async (req, res, next) => {
     await state.save();
 
     res.status(200).json({
-      message: "Success",
-      statename: state,
+      success:true,
+      message: "State Created succesfully",
+      timeStamp : moment().unix(),
+      data: state,
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: error });
+    res.status(400).json({success : false , message: error.message });
   }
 };
 
@@ -54,10 +57,10 @@ exports.updateState = async (req, res, next) => {
     const { statename } = req.body;
 
     if (!stateId) {
-      return res.status(400).json({ messsage: "Missing state Id" });
+      throw Error("Missing state Id")
     }
     if (!statename) {
-      return res.status(400).json({ messsage: "Missing Statename" });
+      throw Error("Missing Statename")
     }
 
     const state = await State.findOne({ id: stateId });
@@ -70,11 +73,12 @@ exports.updateState = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message : "State removed successfully",
-      statename: updatedState,
+      data: updatedState,
+      timeStamp:moment().unix()
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: error });
+    res.status(400).json({success : false , message: error.message });
   }
 };
 
@@ -83,7 +87,7 @@ exports.removeState = async (req, res, next) => {
     const { stateId } = req.query;
 
     if (!stateId) {
-      return res.status(400).json({ messsage: "Missing state Id" });
+      throw Error("Missing state Id")
     }
     const state = await State.findOne({ id: stateId });
 
@@ -92,11 +96,13 @@ exports.removeState = async (req, res, next) => {
       { isActive: false }
     );
     res.status(200).json({
-      message: "Success",
-      statename: removedState,
+      success : true,
+      message: "State Removed successfully",
+      data: removedState,
+      timeStamp : moment().unix()
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: error });
+    res.status(400).json({success : false , message: error.message });
   }
 };

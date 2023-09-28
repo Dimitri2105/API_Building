@@ -22,7 +22,11 @@ exports.logIn = async (req, res, next) => {
 
     await newUser.save();
 
-    const token = jwt.sign({ userId: newUser._id }, "123456789");
+    const token = jwt.sign(
+      { userId: newUser._id,exp: Math.floor(Date.now() / 1000) + (30 * 60), },
+      // { userId: newUser._id},
+      "123456789"
+    );
 
     res.status(200).json({
       success: "true",
@@ -50,7 +54,7 @@ exports.logOut = async (req, res, next) => {
       User: loggedOutUser,
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(400).json({ error: error });
   }
 };

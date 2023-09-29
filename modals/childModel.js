@@ -34,6 +34,12 @@ const childModal = new Schema({
     ref: "District",
     required: true,
   },
+  state_id : {
+    type: String,
+    ref: "State",
+    required: true,
+
+  },
   isActive : {
     type : String,
   }

@@ -1,26 +1,38 @@
+const { json } = require("body-parser");
 const Child = require("../modals/childModel");
 const moment = require("moment");
 
 exports.getallChild = async (req, res, next) => {
   try {
-    const { id } = req.query;
+    const { id, sex, dob, state_id, district_id } = req.query;
 
-    var result;
+    let result;
+    const filter = { isActive: true };
 
     if (id) {
-      let child = await Child.findOne({ id: id, isActive: true });
-      if (!child) {
-        throw error("No child data to be Found");
-      }
-      result = child;
+      filter.id = id;
+      // result = await Child.findOne({ id: id, isActive: true });
     } else {
-      let child = await Child.find({ isActive: true });
-      result = child;
-
-      if (child.length === 0) {
-        throw error("No child data to be Found");
-      }
+      // result = await Child.find({ isActive: true });
+      filter;
     }
+
+    if (sex) filter.sex = sex;
+
+    if (state_id) filter.state_id = state_id;
+
+    if (district_id) filter.district_id = district_id;
+
+    if (dob) {
+      console.log("dob is >>>>>>>>>", dob);
+
+      // const child = await Child.find({dob : {$regex: `${dob}`, $options: 'i'}})
+      filter.dob = { $regex: `${dob}`, $options: "i" };
+    }
+    result = await Child.find(filter);
+
+    console.log(filter);
+
     res.status(200).json({
       success: true,
       message: "Child Profile Detail",
@@ -35,7 +47,7 @@ exports.getallChild = async (req, res, next) => {
 
 exports.getOneChild = async (req, res, next) => {
   try {
-    const { id } = req.query;
+    const { id } = req.params;
 
     if (!id) {
       throw error("Missing Id");
@@ -60,7 +72,8 @@ exports.getOneChild = async (req, res, next) => {
 
 exports.createChild = async (req, res, next) => {
   try {
-    const { name, sex, dob, father_name, mother_name, district_id } = req.body;
+    const { name, sex, dob, father_name, mother_name, district_id, state_id } =
+      req.body;
 
     if (!name || !sex || !dob || !father_name || !mother_name) {
       throw error("All fields are required ");
@@ -73,6 +86,7 @@ exports.createChild = async (req, res, next) => {
       father_name,
       mother_name,
       district_id,
+      state_id,
       isActive: true,
     });
 

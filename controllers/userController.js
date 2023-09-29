@@ -24,8 +24,8 @@ exports.logIn = async (req, res, next) => {
     await newUser.save();
 
     const token = jwt.sign(
-      { userId: newUser._id,exp: Math.floor(Date.now() / 1000) + (30 * 60), },
-      // { userId: newUser._id},
+      // { userId: newUser._id,exp: Math.floor(Date.now() / 1000) + (30 * 60), },
+      { userId: newUser._id},
       "123456789"
     );
 

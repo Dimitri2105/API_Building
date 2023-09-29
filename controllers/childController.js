@@ -4,7 +4,7 @@ const moment = require("moment");
 
 exports.getallChild = async (req, res, next) => {
   try {
-    const { id, sex, dob, state_id, district_id } = req.query;
+    const { id, sex, dob, state_id, district_id, name } = req.query;
 
     let result;
     const filter = { isActive: true };
@@ -24,14 +24,13 @@ exports.getallChild = async (req, res, next) => {
     if (district_id) filter.district_id = district_id;
 
     if (dob) {
-      console.log("dob is >>>>>>>>>", dob);
-
       // const child = await Child.find({dob : {$regex: `${dob}`, $options: 'i'}})
       filter.dob = { $regex: `${dob}`, $options: "i" };
     }
+    if (name) {
+      filter.name = { $regex: `^.*${name}.*$`, $options: "i" };
+    }
     result = await Child.find(filter);
-
-    console.log(filter);
 
     res.status(200).json({
       success: true,

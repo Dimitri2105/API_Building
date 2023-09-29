@@ -9,14 +9,6 @@ exports.getallChild = async (req, res, next) => {
     let result;
     const filter = { isActive: true };
 
-    if (id) {
-      filter.id = id;
-      // result = await Child.findOne({ id: id, isActive: true });
-    } else {
-      // result = await Child.find({ isActive: true });
-      filter;
-    }
-
     if (sex) filter.sex = sex;
 
     if (state_id) filter.state_id = state_id;
@@ -30,8 +22,12 @@ exports.getallChild = async (req, res, next) => {
     if (name) {
       filter.name = { $regex: `^.*${name}.*$`, $options: "i" };
     }
-    result = await Child.find(filter);
-
+    if (id) {
+      filter.id = id;
+      result = await Child.findOne(filter);
+    } else {
+      result = await Child.find(filter);
+    }
     res.status(200).json({
       success: true,
       message: "Child Profile Detail",

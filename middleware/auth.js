@@ -10,14 +10,16 @@ exports.authenticate = async (req, res, next) => {
     const token = req.headers.authorization;
 
     const decodedToken = jwt.verify(token, "123456789");
+    // console.log("decoded Token is >>>>>" , decodedToken)
 
     if (!token || !decodedToken) {
       throw Error("Token Not Verified");
     }
 
     const userFound = await User.findById(decodedToken.userId);
+    // console.log("user found is >>>>>>>>>>>>>"  , userFound)
 
-    if (!userFound || !userFound.length) {
+    if (!userFound) {
       throw Error("User Not Found");
     }
 

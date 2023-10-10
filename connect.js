@@ -4,7 +4,7 @@ const URL =
   // "mongodb+srv://karannewuser:fEmZhME5inEdMBMv@cluster0.knsqu0p.mongodb.net/API_BUILDING?retryWrites=true&w=majority";
 "mongodb+srv://karannewuser:fEmZhME5inEdMBMv@cluster0.knsqu0p.mongodb.net/demo-api-test"
 
-mongoose.set('useFindAndModify', false); // Add this line
+mongoose.set('useFindAndModify', false); 
 
 const options = {
   useNewUrlParser : true ,

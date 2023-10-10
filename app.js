@@ -24,8 +24,8 @@ app.use(childRoutes);
 
 setupConnection()
 .then((result) => {
-    app.listen(4000, () => {
-      console.log("Server listening on port 4000");
+    app.listen(3000, () => {
+      console.log("Server listening on port 3000");
     });
   })
   .catch((error) => {
@@ -47,4 +47,4 @@ setupConnection()
 //     console.error("Database connection error:", error);
 //   });
 
-module.exports = app
+module.exports = app;

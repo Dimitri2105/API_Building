@@ -4,9 +4,11 @@ const moment = require('moment')
 exports.getStates = async (req, res, next) => {
   try {
     const states = await State.find({ isActive: true });
-    if (!states.length === 0) {
-      throw error ("No states to be Found" )
-    }
+    // console.log("states found are >>>>>>>" ,states)
+
+    // if (!states.length === 0) {
+    //   throw error ("No states to be Found" )
+    // }
 
     res.status(200).json({
       success : true,

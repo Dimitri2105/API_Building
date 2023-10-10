@@ -1,36 +1,39 @@
+const { json } = require("body-parser");
 const Child = require("../modals/childModel");
 const moment = require("moment");
 
 exports.getallChild = async (req, res, next) => {
   try {
-    const { id } = req.query;
+    const { id, sex, dob, state_id, district_id, name } = req.query;
 
-    if (id) {
-      const child = await Child.find({ id: id, isActive: true });
-      if (!child) {
-        throw error("No child data to be Found");
-      }
+    let result;
+    const filter = { isActive: true };
 
-      res.status(200).json({
-        success: true,
-        message: "Child Profile Detail",
-        timeStamp: moment().unix(),
-        data: child,
-      });
-    } else {
-      const child = await Child.find({ isActive: true });
+    if (sex) filter.sex = sex;
 
-      if (child.length === 0) {
-        throw error("No child data to be Found");
-      }
+    if (state_id) filter.state_id = state_id;
 
-      res.status(200).json({
-        success: true,
-        message: "Child Profile Detail",
-        timeStamp: moment().unix(),
-        data: child,
-      });
+    if (district_id) filter.district_id = district_id;
+
+    if (dob) {
+      // const child = await Child.find({dob : {$regex: `${dob}`, $options: 'i'}})
+      filter.dob = { $regex: `${dob}`, $options: "i" };
     }
+    if (name) {
+      filter.name = { $regex: `^.*${name}.*$`, $options: "i" };
+    }
+    if (id) {
+      filter.id = id;
+      result = await Child.findOne(filter);
+    } else {
+      result = await Child.find(filter);
+    }
+    res.status(200).json({
+      success: true,
+      message: "Child Profile Detail",
+      timeStamp: moment().unix(),
+      data: result,
+    });
   } catch (error) {
     console.log(error);
     res.status(400).json({ success: false, message: error.message });
@@ -39,12 +42,12 @@ exports.getallChild = async (req, res, next) => {
 
 exports.getOneChild = async (req, res, next) => {
   try {
-    const { id } = req.query;
+    const { id } = req.params;
 
     if (!id) {
       throw error("Missing Id");
     }
-    const child = await Child.find({ id: id, isActive: true });
+    const child = await Child.findOne({ id: id, isActive: true });
 
     if (!child) {
       throw error("No child data to be Found");
@@ -64,7 +67,8 @@ exports.getOneChild = async (req, res, next) => {
 
 exports.createChild = async (req, res, next) => {
   try {
-    const { name, sex, dob, father_name, mother_name, district_id } = req.body;
+    const { name, sex, dob, father_name, mother_name, district_id, state_id } =
+      req.body;
 
     if (!name || !sex || !dob || !father_name || !mother_name) {
       throw error("All fields are required ");
@@ -77,6 +81,7 @@ exports.createChild = async (req, res, next) => {
       father_name,
       mother_name,
       district_id,
+      state_id,
       isActive: true,
     });
 

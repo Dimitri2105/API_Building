@@ -5,6 +5,8 @@ const counter = require("./counterModel");
 
 const Schema = mongoose.Schema
 
+const setupConnection = require('../connect')
+
 const districtSchema = new Schema({
 
     id: {
@@ -40,4 +42,4 @@ districtSchema.pre('save', function(next) {
     });
 });
 
-module.exports = mongoose.model('District' , districtSchema)
+module.exports = new mongoose.model('District' , districtSchema)

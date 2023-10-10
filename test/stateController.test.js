@@ -49,7 +49,6 @@ describe("/API/create-state", () => {
       .send(state)
       .expect(400);
 
-    // console.log("response is >>>>>>>>", response);
     expect(response.body).toHaveProperty("message");
     expect(response.body.success).toBe(false);
   });
@@ -67,7 +66,6 @@ describe("/API/create-state", () => {
       .set("Authorization", `${userOne.token}`)
       .send(state)
       .expect(400);
-    // console.log("response >>>>", response);
     expect(response.body.success).toBe(false);
 
     expect(response.body.message).toBe("State Name already exists");
@@ -79,7 +77,6 @@ describe("/API/get-state", () => {
       .get("/API/get-state")
       .set("Authorization", `${userOne.token}`);
     expect(200);
-    // console.log("response is >>>>>>>>", response);
     expect(response.body).toHaveProperty("message");
     expect(response.body.success).toBe(true);
   });
@@ -93,19 +90,16 @@ describe("/API/update-state", () => {
       .set("Authorization", `${userOne.token}`)
       .send({ statename: newStateName })
       .expect(400);
-    // console.log("response is >>>>" , response)
     expect(response.body.success).toBe(false);
     expect(response.body.message).toBe("Missing Fields");
   });
   test(" statename missing in body", async () => {
     const stateFound = await State.findOne({ statename: stateOne.statename });
-    console.log(stateFound);
     const response = await supertest(app)
       .post("/API/update-state")
       .set("Authorization", `${userOne.token}`)
       .query({ stateId: stateFound.id })
       .expect(400);
-    // console.log("response is >>>>" , response)
     expect(response.body.success).toBe(false);
     expect(response.body.message).toBe("Missing Fields");
   });
@@ -120,14 +114,36 @@ describe("/API/update-state", () => {
       .query({ stateId: stateFound.id })
       .send({ statename: newStateName })
       .expect(200);
-    // console.log("response is >>>>" , response)
     expect(response.body.success).toBe(true);
 
     expect(response.body.message).toBe("State updated successfully");
   });
 });
-describe("/API/remove-state" ,() =>{
-  test("stateId present in query params" ,async() =>{
-    
-  })
-})
+describe("/API/remove-state", () => {
+  test("stateId missing in query params", async () => {
+    const response = await supertest(app)
+      .post("/API/remove-state")
+      .set("Authorization", `${userOne.token}`)
+      .expect(400);
+    expect(response.body.success).toBe(false);
+
+    expect(response.body.message).toBe("Missing state Id");
+  });
+  test("stateId present in query params", async () => {
+    const state = { statename: "Remove State" };
+    const createStateResponse = await supertest(app)
+      .post("/API/create-state")
+      .set("Authorization", `${userOne.token}`)
+      .send(state)
+      .expect(200);
+    const removeId = createStateResponse.body.data.id;
+    const response = await supertest(app)
+      .post("/API/remove-state")
+      .set("Authorization", `${userOne.token}`)
+      .query({ stateId: removeId })
+      .expect(200);
+    expect(response.body.success).toBe(true);
+
+    expect(response.body.message).toBe("State Removed successfully");
+  });
+});

@@ -86,7 +86,7 @@ exports.removeState = async (req, res, next) => {
     const { stateId } = req.query;
 
     if (!stateId) {
-      throw error("Missing state Id")
+      throw Error("Missing state Id")
     }
     const state = await State.findOne({ id: stateId });
 
@@ -101,7 +101,7 @@ exports.removeState = async (req, res, next) => {
       timeStamp : moment().unix()
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(400).json({success : false , message: error.message });
   }
 };

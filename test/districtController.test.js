@@ -31,13 +31,44 @@ beforeAll(async () => {
   await District.deleteMany({});
 });
 
+describe("/API/create-district", () => {
+  test("when districtName  and stateID is sent ", async () => {
+    const district = {
+      districtName: districtOne.districtName,
+      State_id: districtOne.State_id,
+    };
+    const response = await supertest(app)
+      .post("/API/create-district")
+      .set("Authorization", `${userOne.token}`)
+      .send(district)
+      .expect(200);
+    // console.log("response is>>>>>", response);
+    expect(response.body).toHaveProperty("message");
+    expect(response.body.success).toBe(true);
+  });
+  test("given districtName and stateId are absent", async () => {
+    const tests = [{ districtName: "Test District 1 " }, { State_id: "5" }, {}];
+
+    for (test of tests) {
+      const response = await supertest(app)
+        .post("/API/create-district")
+        .set("Authorization", `${userOne.token}`)
+        .send(test)
+        .expect(400);
+
+      expect(response.body.success).toBe(false);
+      expect(response.body.message).toBe("State ID or District Name missing");
+    }
+  });
+});
+
 describe("/API/get-district", () => {
   test("Get all districts when stateId is present", async () => {
     const response = await supertest(app)
       .get("/API/get-district")
       .query({ state_id: "7" })
-      .set("Authorization", `${userOne.token}`);
-    expect(200);
+      .set("Authorization", `${userOne.token}`)
+      .expect(200);
     expect(response.body).toHaveProperty("message");
     expect(response.body.success).toBe(true);
   });

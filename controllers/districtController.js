@@ -1,19 +1,18 @@
 const District = require("../modals/districtModel");
-const moment = require('moment')
+const moment = require("moment");
 
 exports.getDistricts = async (req, res, next) => {
   try {
     const { state_id } = req.query;
 
     if (!state_id) {
-      throw Error("State ID missing")
+      throw Error("State ID missing");
     }
 
     const district = await District.find({
       State_id: state_id,
       isActive: true,
     });
-
     // if (district.length === 0) {
     //   throw Error("Cannot Find State")
     // }
@@ -26,7 +25,7 @@ exports.getDistricts = async (req, res, next) => {
     });
   } catch (error) {
     // console.log(error);
-    res.status(400).json({success : false , message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
@@ -35,7 +34,7 @@ exports.createDistrict = async (req, res, next) => {
     const { State_id, districtName } = req.body;
 
     if (!State_id || !districtName) {
-        throw error("State ID or District Name missing")
+      throw Error("State ID or District Name missing");
     }
 
     const district = new District({
@@ -48,13 +47,13 @@ exports.createDistrict = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      timeStamp : moment().unix(),
+      timeStamp: moment().unix(),
       message: "District created Successfully",
       data: district,
     });
   } catch (error) {
-    console.log(error);
-    res.status(400).json({success : false , message: error.message });
+    // console.log(error);
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
@@ -64,10 +63,10 @@ exports.updateDistrict = async (req, res, next) => {
     const { districtName } = req.body;
 
     if (!id) {
-      throw error("Missing state Id")
+      throw error("Missing state Id");
     }
     if (!districtName) {
-      throw error ("Missing Statename")
+      throw error("Missing Statename");
     }
 
     const district = await District.findOne({ id: id });
@@ -78,15 +77,14 @@ exports.updateDistrict = async (req, res, next) => {
     );
 
     res.status(200).json({
-
-      success : true,
+      success: true,
       message: "District updated successfully",
       data: updatedDistrict,
-      timeStamp : moment().unix()
+      timeStamp: moment().unix(),
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({success : false , message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 exports.removeDistrict = async (req, res, next) => {
@@ -94,7 +92,7 @@ exports.removeDistrict = async (req, res, next) => {
     const { id } = req.query;
 
     if (!id) {
-      throw error("Missing Id")
+      throw error("Missing Id");
     }
     const district = await District.findOne({ id: id });
 
@@ -104,12 +102,12 @@ exports.removeDistrict = async (req, res, next) => {
     );
     res.status(200).json({
       success: true,
-      message : "State removed successfully",
+      message: "State removed successfully",
       data: removedDistrict,
-      timeStamp : moment().unix()
+      timeStamp: moment().unix(),
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({success : false , message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };

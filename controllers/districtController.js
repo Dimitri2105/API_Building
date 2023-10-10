@@ -6,7 +6,7 @@ exports.getDistricts = async (req, res, next) => {
     const { state_id } = req.query;
 
     if (!state_id) {
-      throw error("State ID missing")
+      throw Error("State ID missing")
     }
 
     const district = await District.find({
@@ -14,9 +14,9 @@ exports.getDistricts = async (req, res, next) => {
       isActive: true,
     });
 
-    if (district.length === 0) {
-      throw error("Cannot Find State")
-    }
+    // if (district.length === 0) {
+    //   throw Error("Cannot Find State")
+    // }
 
     res.status(200).json({
       success: true,
@@ -25,7 +25,7 @@ exports.getDistricts = async (req, res, next) => {
       data: district,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(400).json({success : false , message: error.message });
   }
 };

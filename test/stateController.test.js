@@ -84,4 +84,50 @@ describe("/API/get-state", () => {
     expect(response.body.success).toBe(true);
   });
 });
-describe("")
+describe("/API/update-state", () => {
+  test(" stateId missing in query params", async () => {
+    const newStateName = "Test State 25";
+
+    const response = await supertest(app)
+      .post("/API/update-state")
+      .set("Authorization", `${userOne.token}`)
+      .send({ statename: newStateName })
+      .expect(400);
+    // console.log("response is >>>>" , response)
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe("Missing Fields");
+  });
+  test(" statename missing in body", async () => {
+    const stateFound = await State.findOne({ statename: stateOne.statename });
+    console.log(stateFound);
+    const response = await supertest(app)
+      .post("/API/update-state")
+      .set("Authorization", `${userOne.token}`)
+      .query({ stateId: stateFound.id })
+      .expect(400);
+    // console.log("response is >>>>" , response)
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe("Missing Fields");
+  });
+  test("update state when state id and statename given ", async () => {
+    const newStateName = "Test State 2";
+
+    const stateFound = await State.findOne({ statename: stateOne.statename });
+
+    const response = await supertest(app)
+      .post("/API/update-state")
+      .set("Authorization", `${userOne.token}`)
+      .query({ stateId: stateFound.id })
+      .send({ statename: newStateName })
+      .expect(200);
+    // console.log("response is >>>>" , response)
+    expect(response.body.success).toBe(true);
+
+    expect(response.body.message).toBe("State updated successfully");
+  });
+});
+describe("/API/remove-state" ,() =>{
+  test("stateId present in query params" ,async() =>{
+    
+  })
+})

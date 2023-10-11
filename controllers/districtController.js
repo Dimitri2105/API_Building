@@ -63,7 +63,7 @@ exports.updateDistrict = async (req, res, next) => {
     const { districtName } = req.body;
 
     if (!id || !districtName) {
-      throw Error("Missing state Id or Statename");
+      throw Error("Missing  Id or District Name ");
     }
     const district = await District.findOne({ id: id });
 
@@ -88,7 +88,7 @@ exports.removeDistrict = async (req, res, next) => {
     const { id } = req.query;
 
     if (!id) {
-      throw error("Missing Id");
+      throw Error("Missing Id");
     }
     const district = await District.findOne({ id: id });
 
@@ -98,12 +98,12 @@ exports.removeDistrict = async (req, res, next) => {
     );
     res.status(200).json({
       success: true,
-      message: "State removed successfully",
+      message: "District removed successfully",
       data: removedDistrict,
       timeStamp: moment().unix(),
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(400).json({ success: false, message: error.message });
   }
 };

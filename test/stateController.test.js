@@ -3,12 +3,9 @@ test("hello" ,() =>{})
 // const mongoose = require("mongoose");
 // const ObjectId = mongoose.Types.ObjectId;
 
-// const bcrypt = require("bcrypt");
-// const jwt = require("jsonwebtoken");
-// const stateController = require("../controllers/stateController");
+
 // const app = require("../app");
 // const State = require("../modals/stateModel");
-// const User = require("../modals/userModel");
 // const supertest = require("supertest");
 
 // const stateOneId = new mongoose.Types.ObjectId();

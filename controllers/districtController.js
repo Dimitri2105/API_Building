@@ -62,13 +62,9 @@ exports.updateDistrict = async (req, res, next) => {
     const { id } = req.query;
     const { districtName } = req.body;
 
-    if (!id) {
-      throw error("Missing state Id");
+    if (!id || !districtName) {
+      throw Error("Missing state Id or Statename");
     }
-    if (!districtName) {
-      throw error("Missing Statename");
-    }
-
     const district = await District.findOne({ id: id });
 
     const updatedDistrict = await District.updateOne(
@@ -83,7 +79,7 @@ exports.updateDistrict = async (req, res, next) => {
       timeStamp: moment().unix(),
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(400).json({ success: false, message: error.message });
   }
 };

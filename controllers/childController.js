@@ -45,13 +45,13 @@ exports.getOneChild = async (req, res, next) => {
     const { id } = req.params;
 
     if (!id) {
-      throw error("Missing Id");
+      throw Error("Missing Id");
     }
     const child = await Child.findOne({ id: id, isActive: true });
 
-    if (!child) {
-      throw error("No child data to be Found");
-    }
+    // if (!child) {
+    //   throw error("No child data to be Found");
+    // }
 
     res.status(200).json({
       success: true,
@@ -60,7 +60,7 @@ exports.getOneChild = async (req, res, next) => {
       data: child,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(400).json({ success: false, message: error.message });
   }
 };

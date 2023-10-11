@@ -31,7 +31,7 @@ const userOne = {
 beforeAll(async () => {
   await Child.deleteMany({});
 });
-describe('"/API/get-child', () => {
+describe("/API/get-child", () => {
   describe("Given either entity in query params", () => {
     // const childFound = await Child.findOne({ _id: ObjectId("123456789142") });
     // console.log(childFound);
@@ -73,4 +73,25 @@ describe('"/API/get-child', () => {
       });
     }
   });
+});
+describe("/API/get-one-child/:id", () => {
+  test("When Id is absent", async () => {
+    const response = await supertest(app)
+      .get(`/API/get-one-child/`)
+      .set("Authorization", `${userOne.token}`)
+      // .expect(400);
+    // console.log(response);
+    // expect(response.body.message).toBe("Missing Id");
+    // expect(response.body.success).toBe(false);
+  });
+  test("Get all child when ID is present", async () => {
+    const childId = "127";
+    const response = await supertest(app)
+      .get(`/API/get-one-child/${childId}`)
+      .set("Authorization", `${userOne.token}`)
+      .expect(200);
+    expect(response.body).toHaveProperty("message");
+    expect(response.body.success).toBe(true);
+  });
+ 
 });

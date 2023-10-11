@@ -9,8 +9,13 @@ const supertest = require("supertest");
 const childOneId = new mongoose.Types.ObjectId();
 const childOne = {
   _id: childOneId,
-  districtName: "Test District",
-  State_id: "7",
+  name: "Test Child",
+  sex: "Male",
+  dob: "10-01-1999",
+  father_name: "Test Father Name",
+  mother_name: "Test Mother Name",
+  district_id: "7",
+  state_id: "7",
   lastActive: true,
 };
 const userOneId = ObjectId("6524e1a2f5f7b76fb49c9988");
@@ -24,5 +29,48 @@ const userOne = {
 };
 
 beforeAll(async () => {
-  await District.deleteMany({});
+  await Child.deleteMany({});
+});
+describe('"/API/get-child', () => {
+  describe("Given either entity in query params", () => {
+    // const childFound = await Child.findOne({ _id: ObjectId("123456789142") });
+    // console.log(childFound);
+    const tests = [
+      {
+        testName: "Get all child without filters",
+        query: {},
+      },
+      {
+        testName: "Filter children with sex(Male)",
+        query: { sex: "Male" },
+      },
+      {
+        testName: "Filter children with state id",
+        query: { state_id: "7" },
+      },
+      {
+        testName: "Filter children with district_id",
+        query: { district_id: "7" },
+      },
+      //   {
+      //     testName: "Filter children with id",
+      //     query : {id : childFound.id}
+      //   },
+      {
+        testName: "Filter children with Name",
+        query: { name: "Test Child" },
+      },
+    ];
+    for (let testCase of tests) {
+      test(testCase.testName, async () => {
+        const response = await supertest(app)
+          .get("/API/get-child")
+          .set("Authorization", `${userOne.token}`)
+          .query(test.query)
+          .expect(200);
+        expect(response.body).toHaveProperty("message");
+        expect(response.body.success).toBe(true);
+      });
+    }
+  });
 });

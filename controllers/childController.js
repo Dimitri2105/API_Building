@@ -127,7 +127,7 @@ exports.updateChild = async (req, res, next) => {
       data: updatedChild,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(400).json({ success: false, message: error.message });
   }
 };

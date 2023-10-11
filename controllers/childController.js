@@ -137,7 +137,7 @@ exports.removeChild = async (req, res, next) => {
     const { id } = req.query;
 
     if (!id) {
-      throw error("Missing child Id");
+      throw Error("Missing child Id");
     }
     const child = await Child.findOne({ id: id });
 
@@ -152,7 +152,7 @@ exports.removeChild = async (req, res, next) => {
       timeStamp: moment().unix(),
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(400).json({ success: false, message: error.message });
   }
 };

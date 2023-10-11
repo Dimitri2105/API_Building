@@ -25,34 +25,42 @@ const userOne = {
   password: "Test Password",
   lastActive: true,
   token:
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTI0ZTFhMmY1ZjdiNzZmYjQ5Yzk5ODgiLCJpYXQiOjE2OTY5MTU4NzV9.UQNDAMS0iHQrA7DDiskdO81KMsJc9A-BPC_gAo3X_S8",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTI2Nzk2MjcxNTExZjI1MDQ0ZTExODAiLCJpYXQiOjE2OTcwMjAyNTh9.y5Z0M22R-_PVt0RphfsG9fZk2HTUifNVI4BOZS8nP8M",
 };
 
-beforeAll(async () => {
+// beforeAll(async () => {
+//   await Child.deleteMany({});
+// });
+beforeEach(async () => {
   await Child.deleteMany({});
 });
+
+afterEach(async () => {
+  await Child.deleteMany({});
+});
+
 describe("/API/create-child", () => {
-  // beforeAll(async () => {
-  //   await Child.deleteMany({});
-  // });
-  // test("When all fields are present", async () => {
-  //   const child = {
-  //     name: childOne.name,
-  //     sex: childOne.sex,
-  //     dob: childOne.dob,
-  //     father_name: childOne.father_name,
-  //     mother_name: childOne.mother_name,
-  //     district_id: childOne.district_id,
-  //     state_id: childOne.state_id,
-  //   };
-  //   const response = await supertest(app)
-  //     .post("/API/create-child")
-  //     .set("Authorization", `${userOne.token}`)
-  //     .send(child)
-  //     .expect(200);
-  //   expect(response.body).toHaveProperty("message");
-  //   expect(response.body.success).toBe(true);
-  // });
+  beforeAll(async () => {
+    await Child.deleteMany({});
+  });
+  test("When all fields are present", async () => {
+    const child = {
+      name: childOne.name,
+      sex: childOne.sex,
+      dob: childOne.dob,
+      father_name: childOne.father_name,
+      mother_name: childOne.mother_name,
+      district_id: childOne.district_id,
+      state_id: childOne.state_id,
+    };
+    const response = await supertest(app)
+      .post("/API/create-child")
+      .set("Authorization", `${userOne.token}`)
+      .send(child)
+      .expect(200);
+    expect(response.body).toHaveProperty("message");
+    expect(response.body.success).toBe(true);
+  });
   test("When a field is missing", async () => {
     const child = {
       sex: childOne.sex,
@@ -135,8 +143,6 @@ describe("/API/update-child", () => {
     expect(response.body.message).toBe("Missing Id");
   });
   test(" When body is missing", async () => {
-    // const childFound = await Child.find({});
-    // console.log("childFound", childFound);
     const response = await supertest(app)
       .post("/API/update-child")
       .set("Authorization", `${userOne.token}`)
@@ -168,32 +174,42 @@ describe("/API/update-child", () => {
     expect(response.body.message).toBe("Child updated successfully");
   });
 });
-// describe("/API/remove-district" ,() =>{
-//     test("Id missing in query params", async () => {
-//     const response = await supertest(app)
-//       .post("/API/remove-district")
-//       .set("Authorization", `${userOne.token}`)
-//       .expect(400);
-//     expect(response.body.success).toBe(false);
+describe("/API/remove-child", () => {
+  beforeAll(async () => {
+    await Child.remove({ name: "Remove Child" });
+  });
+  test("Id missing in query params", async () => {
+    const response = await supertest(app)
+      .post("/API/remove-child")
+      .set("Authorization", `${userOne.token}`)
+      .expect(400);
+    expect(response.body.success).toBe(false);
 
-//     expect(response.body.message).toBe("Missing Id");
-//   });
-//   test("Id present in query params", async () => {
-//     const district = { districtName: "Remove District" ,State_id: "7", };
-//     const createDistrictResponse = await supertest(app)
-//       .post("/API/create-district")
-//       .set("Authorization", `${userOne.token}`)
-//       .send(district)
-//       .expect(200);
-//     const removeId = createDistrictResponse.body.data.id;
-//     const response = await supertest(app)
-//       .post("/API/remove-district")
-//       .set("Authorization", `${userOne.token}`)
-//       .query({ id: removeId })
-//       .expect(200);
-//     expect(response.body.success).toBe(true);
+    expect(response.body.message).toBe("Missing child Id");
+  });
+  test("Id present in query params", async () => {
+    const child = {
+      name: "Remove Child",
+      sex: childOne.sex,
+      dob: childOne.dob,
+      father_name: childOne.father_name,
+      mother_name: childOne.mother_name,
+      district_id: childOne.district_id,
+      state_id: childOne.state_id,
+    };
+    const createChildResponse = await supertest(app)
+      .post("/API/create-child")
+      .set("Authorization", `${userOne.token}`)
+      .send(child)
+      .expect(200);
+    const removeId = createChildResponse.body.data.id;
+    const response = await supertest(app)
+      .post("/API/remove-child")
+      .set("Authorization", `${userOne.token}`)
+      .query({ id: removeId })
+      .expect(200);
+    expect(response.body.success).toBe(true);
 
-//     expect(response.body.message).toBe("District removed successfully");
-//   });
-  
-// })
+    expect(response.body.message).toBe("Child removed successfully");
+  });
+});

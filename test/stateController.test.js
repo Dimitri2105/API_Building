@@ -1,8 +1,7 @@
-test("hello" ,() =>{})
+test("hello", () => {});
 
 // const mongoose = require("mongoose");
 // const ObjectId = mongoose.Types.ObjectId;
-
 
 // const app = require("../app");
 // const State = require("../modals/stateModel");
@@ -21,7 +20,7 @@ test("hello" ,() =>{})
 //   password: "Test Password",
 //   lastActive: true,
 //   token:
-//     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTI0ZTFhMmY1ZjdiNzZmYjQ5Yzk5ODgiLCJpYXQiOjE2OTY5MTU4NzV9.UQNDAMS0iHQrA7DDiskdO81KMsJc9A-BPC_gAo3X_S8",
+//     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTI2Nzk2MjcxNTExZjI1MDQ0ZTExODAiLCJpYXQiOjE2OTcwMjAyNTh9.y5Z0M22R-_PVt0RphfsG9fZk2HTUifNVI4BOZS8nP8M",
 // };
 
 // beforeAll(async () => {

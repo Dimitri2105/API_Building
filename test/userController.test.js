@@ -18,7 +18,7 @@ test("hello" ,() =>{})
 // const userOneId = new mongoose.Types.ObjectId();
 // const userOne = {
 //   _id: userOneId,
-//   username: "Test User 7",
+//   username: "Test User 21",
 //   password: "Test Password",
 //   lastActive: true,
 //   tokens: [
@@ -38,24 +38,24 @@ test("hello" ,() =>{})
 // //   await new Promise((resolve) => app.close(resolve));
 // // });
 // describe(" POST /API/logIn", () => {
-// //   describe("given password and username are absent", () => {
-// //     const tests = [
-// //       { title: "Password missing", body: { username: "Test User" } },
-// //       { title: "Username missing", body: { password: "Test Password" } },
-// //       { title: "Password and username missing", body: {} },
-// //     ];
+//   describe("given password and username are absent", () => {
+//     const tests = [
+//       { title: "Password missing", body: { username: "Test User" } },
+//       { title: "Username missing", body: { password: "Test Password" } },
+//       { title: "Password and username missing", body: {} },
+//     ];
 
-// //     for (let testCase of tests) {
-// //       test(testCase.title, async () => {
-// //         const response = await supertest(app)
-// //           .post("/API/LogIn")
-// //           .send(testCase.body);
-// //         expect(response.status).toBe(400);
-// //         expect(response.body).toHaveProperty("message");
-// //         expect(response.body.success).toBe(false);
-// //       });    
-// //     }
-// //   });
+//     for (let testCase of tests) {
+//       test(testCase.title, async () => {
+//         const response = await supertest(app)
+//           .post("/API/LogIn")
+//           .send(testCase.body);
+//         expect(response.status).toBe(400);
+//         expect(response.body).toHaveProperty("message");
+//         expect(response.body.success).toBe(false);
+//       });    
+//     }
+//   });
 //   test("Both username and password sent", async () => {
 //     const newUser = {
 //       username: userOne.username,
@@ -72,11 +72,11 @@ test("hello" ,() =>{})
 //   });
 // });
 
-// // describe(" GET /API/logOut", () => {
-// //   test("when user logs out", async () => {
-// //     const response = await supertest(app)
-// //       .get("/API/logOut")
-// //       .set("Authorization", `${userOne.tokens[0].token}`);
-// //     expect(200);
-// //   });
-// // });
+// // // describe(" GET /API/logOut", () => {
+// // //   test("when user logs out", async () => {
+// // //     const response = await supertest(app)
+// // //       .get("/API/logOut")
+// // //       .set("Authorization", `${userOne.tokens[0].token}`);
+// // //     expect(200);
+// // //   });
+// // // });

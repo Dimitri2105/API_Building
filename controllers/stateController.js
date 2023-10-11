@@ -4,11 +4,11 @@ const moment = require('moment')
 exports.getStates = async (req, res, next) => {
   try {
     const states = await State.find({ isActive: true });
-    // console.log("states found are >>>>>>>" ,states)
+    // console.log("states are >>>>" , states)
 
-    // if (!states.length === 0) {
-    //   throw error ("No states to be Found" )
-    // }
+    if (!states.length === 0) {
+      throw error ("No states to be Found" )
+    }
 
     res.status(200).json({
       success : true,
@@ -26,13 +26,13 @@ exports.createState = async (req, res, next) => {
     const { statename } = req.body;
 
     if (statename.length === 0) {
-      throw error("State Name absent")
+      throw Error("State Name absent")
     }
 
     const existingState = await State.findOne({ statename });
 
     if (existingState) {
-      throw error("State Name already exists")
+      throw Error("State Name already exists")
     }
     const state = new State({
       statename,
@@ -48,7 +48,7 @@ exports.createState = async (req, res, next) => {
       data: state,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(400).json({success : false , message: error.message });
   }
 };
@@ -59,13 +59,9 @@ exports.updateState = async (req, res, next) => {
 
     const { statename } = req.body;
 
-    if (!stateId) {
-      throw error("Missing state Id")
+    if (!stateId || !statename) {
+      throw Error("Missing Fields")
     }
-    if (!statename) {
-      throw error("Missing Statename")
-    }
-
     const state = await State.findOne({ id: stateId });
 
     const updatedState = await State.updateOne(
@@ -75,12 +71,12 @@ exports.updateState = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message : "State removed successfully",
+      message : "State updated successfully",
       data: updatedState,
       timeStamp:moment().unix()
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(400).json({success : false , message: error.message });
   }
 };
@@ -90,7 +86,7 @@ exports.removeState = async (req, res, next) => {
     const { stateId } = req.query;
 
     if (!stateId) {
-      throw error("Missing state Id")
+      throw Error("Missing state Id")
     }
     const state = await State.findOne({ id: stateId });
 
@@ -105,7 +101,7 @@ exports.removeState = async (req, res, next) => {
       timeStamp : moment().unix()
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(400).json({success : false , message: error.message });
   }
 };

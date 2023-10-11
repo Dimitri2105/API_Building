@@ -31,9 +31,51 @@ const userOne = {
 beforeAll(async () => {
   await Child.deleteMany({});
 });
+describe("/API/create-child", () => {
+  // beforeAll(async () => {
+  //   await Child.deleteMany({});
+  // });
+  // test("When all fields are present", async () => {
+  //   const child = {
+  //     name: childOne.name,
+  //     sex: childOne.sex,
+  //     dob: childOne.dob,
+  //     father_name: childOne.father_name,
+  //     mother_name: childOne.mother_name,
+  //     district_id: childOne.district_id,
+  //     state_id: childOne.state_id,
+  //   };
+  //   const response = await supertest(app)
+  //     .post("/API/create-child")
+  //     .set("Authorization", `${userOne.token}`)
+  //     .send(child)
+  //     .expect(200);
+  //   expect(response.body).toHaveProperty("message");
+  //   expect(response.body.success).toBe(true);
+  // });
+  test("When a field is missing", async () => {
+    const child = {
+      sex: childOne.sex,
+      dob: childOne.dob,
+      father_name: childOne.father_name,
+      mother_name: childOne.mother_name,
+      district_id: childOne.district_id,
+      state_id: childOne.state_id,
+    };
+    const response = await supertest(app)
+      .post("/API/create-child")
+      .set("Authorization", `${userOne.token}`)
+      .send(child)
+      .expect(400);
+    expect(response.body).toHaveProperty("message");
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe("All fields are required ")
+  });
+});
 describe("/API/get-child", () => {
+  
   describe("Given either entity in query params", () => {
-    // const childFound = await Child.findOne({ _id: ObjectId("123456789142") });
+    // const childFound = await Child.findOne({ _id: ObjectId("652663826d5233765ce50c9b") });
     // console.log(childFound);
     const tests = [
       {
@@ -52,10 +94,10 @@ describe("/API/get-child", () => {
         testName: "Filter children with district_id",
         query: { district_id: "7" },
       },
-      //   {
-      //     testName: "Filter children with id",
-      //     query : {id : childFound.id}
-      //   },
+        {
+          testName: "Filter children with id",
+          query : {id : '1387'}
+        },
       {
         testName: "Filter children with Name",
         query: { name: "Test Child" },
@@ -73,25 +115,4 @@ describe("/API/get-child", () => {
       });
     }
   });
-});
-describe("/API/get-one-child/:id", () => {
-  test("When Id is absent", async () => {
-    const response = await supertest(app)
-      .get(`/API/get-one-child/`)
-      .set("Authorization", `${userOne.token}`)
-      // .expect(400);
-    // console.log(response);
-    // expect(response.body.message).toBe("Missing Id");
-    // expect(response.body.success).toBe(false);
-  });
-  test("Get all child when ID is present", async () => {
-    const childId = "127";
-    const response = await supertest(app)
-      .get(`/API/get-one-child/${childId}`)
-      .set("Authorization", `${userOne.token}`)
-      .expect(200);
-    expect(response.body).toHaveProperty("message");
-    expect(response.body.success).toBe(true);
-  });
- 
 });

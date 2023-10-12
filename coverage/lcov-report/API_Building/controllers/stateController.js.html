@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">15.59% </span>
+                <span class="strong">15.88% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/109</span>
+                <span class='fraction'>17/107</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">15.59% </span>
+                <span class="strong">15.88% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/109</span>
+                <span class='fraction'>17/107</span>
             </div>
         
             
@@ -170,27 +170,7 @@
 <a name='L105'></a><a href='#L105'>105</a>
 <a name='L106'></a><a href='#L106'>106</a>
 <a name='L107'></a><a href='#L107'>107</a>
-<a name='L108'></a><a href='#L108'>108</a>
-<a name='L109'></a><a href='#L109'>109</a>
-<a name='L110'></a><a href='#L110'>110</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L108'></a><a href='#L108'>108</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -211,6 +191,26 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -226,10 +226,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -287,6 +283,8 @@
 exports.getStates = <span class="fstat-no" title="function not covered" >async (req, res, next) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >  try {</span>
 <span class="cstat-no" title="statement not covered" >    const states = await State.find({ isActive: true });</span>
+<span class="cstat-no" title="statement not covered" >    // console.log("states are &gt;&gt;&gt;&gt;" , states)</span>
+<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    if (!states.length === 0) {</span>
 <span class="cstat-no" title="statement not covered" >      throw error ("No states to be Found" )</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
@@ -307,13 +305,13 @@ exports.createState = <span class="fstat-no" title="function not covered" >async
 <span class="cstat-no" title="statement not covered" >    const { statename } = req.body;</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    if (statename.length === 0) {</span>
-<span class="cstat-no" title="statement not covered" >      throw error("State Name absent")</span>
+<span class="cstat-no" title="statement not covered" >      throw Error("State Name absent")</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    const existingState = await State.findOne({ statename });</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    if (existingState) {</span>
-<span class="cstat-no" title="statement not covered" >      throw error("State Name already exists")</span>
+<span class="cstat-no" title="statement not covered" >      throw Error("State Name already exists")</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" >    const state = new State({</span>
 <span class="cstat-no" title="statement not covered" >      statename,</span>
@@ -329,7 +327,7 @@ exports.createState = <span class="fstat-no" title="function not covered" >async
 <span class="cstat-no" title="statement not covered" >      data: state,</span>
 <span class="cstat-no" title="statement not covered" >    });</span>
 <span class="cstat-no" title="statement not covered" >  } catch (error) {</span>
-<span class="cstat-no" title="statement not covered" >    console.log(error);</span>
+<span class="cstat-no" title="statement not covered" >    // console.log(error);</span>
 <span class="cstat-no" title="statement not covered" >    res.status(400).json({success : false , message: error.message });</span>
   }
 };
@@ -340,13 +338,9 @@ exports.updateState = <span class="fstat-no" title="function not covered" >async
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    const { statename } = req.body;</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    if (!stateId) {</span>
-<span class="cstat-no" title="statement not covered" >      throw error("Missing state Id")</span>
+<span class="cstat-no" title="statement not covered" >    if (!stateId || !statename) {</span>
+<span class="cstat-no" title="statement not covered" >      throw Error("Missing Fields")</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
-<span class="cstat-no" title="statement not covered" >    if (!statename) {</span>
-<span class="cstat-no" title="statement not covered" >      throw error("Missing Statename")</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
-<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    const state = await State.findOne({ id: stateId });</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    const updatedState = await State.updateOne(</span>
@@ -356,12 +350,12 @@ exports.updateState = <span class="fstat-no" title="function not covered" >async
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    res.status(200).json({</span>
 <span class="cstat-no" title="statement not covered" >      success: true,</span>
-<span class="cstat-no" title="statement not covered" >      message : "State removed successfully",</span>
+<span class="cstat-no" title="statement not covered" >      message : "State updated successfully",</span>
 <span class="cstat-no" title="statement not covered" >      data: updatedState,</span>
 <span class="cstat-no" title="statement not covered" >      timeStamp:moment().unix()</span>
 <span class="cstat-no" title="statement not covered" >    });</span>
 <span class="cstat-no" title="statement not covered" >  } catch (error) {</span>
-<span class="cstat-no" title="statement not covered" >    console.log(error);</span>
+<span class="cstat-no" title="statement not covered" >    // console.log(error);</span>
 <span class="cstat-no" title="statement not covered" >    res.status(400).json({success : false , message: error.message });</span>
   }
 };
@@ -371,7 +365,7 @@ exports.removeState = <span class="fstat-no" title="function not covered" >async
 <span class="cstat-no" title="statement not covered" >    const { stateId } = req.query;</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    if (!stateId) {</span>
-<span class="cstat-no" title="statement not covered" >      throw error("Missing state Id")</span>
+<span class="cstat-no" title="statement not covered" >      throw Error("Missing state Id")</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" >    const state = await State.findOne({ id: stateId });</span>
 <span class="cstat-no" title="statement not covered" ></span>
@@ -386,7 +380,7 @@ exports.removeState = <span class="fstat-no" title="function not covered" >async
 <span class="cstat-no" title="statement not covered" >      timeStamp : moment().unix()</span>
 <span class="cstat-no" title="statement not covered" >    });</span>
 <span class="cstat-no" title="statement not covered" >  } catch (error) {</span>
-<span class="cstat-no" title="statement not covered" >    console.log(error);</span>
+<span class="cstat-no" title="statement not covered" >    // console.log(error);</span>
 <span class="cstat-no" title="statement not covered" >    res.status(400).json({success : false , message: error.message });</span>
   }
 };
@@ -397,7 +391,7 @@ exports.removeState = <span class="fstat-no" title="function not covered" >async
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-09T10:13:12.917Z
+                at 2023-10-11T12:29:24.359Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

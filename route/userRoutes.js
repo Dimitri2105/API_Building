@@ -5,6 +5,8 @@ const userController = require("../controllers/userController");
 
 const Router = express.Router();
 
+Router.post("/API/SignUp" , userController.signUp)
+
 Router.post("/API/LogIn", userController.logIn);
 
 Router.get("/API/logOut", authentication.authenticate, userController.logOut);

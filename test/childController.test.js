@@ -27,10 +27,11 @@ const userOne = {
   token:
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTI2Nzk2MjcxNTExZjI1MDQ0ZTExODAiLCJpYXQiOjE2OTcwMjAyNTh9.y5Z0M22R-_PVt0RphfsG9fZk2HTUifNVI4BOZS8nP8M",
 };
-
-// beforeAll(async () => {
-//   await Child.deleteMany({});
-// });
+let token ;
+beforeAll(async () => {
+  token = config.getToken();
+  await Child.deleteMany({});
+});
 beforeEach(async () => {
   await Child.deleteMany({});
 });
@@ -55,7 +56,7 @@ describe("/API/create-child", () => {
     };
     const response = await supertest(app)
       .post("/API/create-child")
-      .set("Authorization", `${userOne.token}`)
+      .set("Authorization", `${token}`)
       .send(child)
       .expect(200);
     expect(response.body).toHaveProperty("message");

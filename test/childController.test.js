@@ -5,6 +5,7 @@ const ObjectId = mongoose.Types.ObjectId;
 const app = require("../app");
 const Child = require("../modals/districtModel");
 const supertest = require("supertest");
+const config = require('./config/userInfo')
 
 const childOneId = new mongoose.Types.ObjectId();
 const childOne = {
@@ -18,28 +19,11 @@ const childOne = {
   state_id: "7",
   lastActive: true,
 };
-const userOneId = ObjectId("6524e1a2f5f7b76fb49c9988");
-const userOne = {
-  _id: userOneId,
-  username: "Test User",
-  password: "Test Password",
-  lastActive: true,
-  token:
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTI2Nzk2MjcxNTExZjI1MDQ0ZTExODAiLCJpYXQiOjE2OTcwMjAyNTh9.y5Z0M22R-_PVt0RphfsG9fZk2HTUifNVI4BOZS8nP8M",
-};
 let token ;
 beforeAll(async () => {
   token = config.getToken();
   await Child.deleteMany({});
-});
-beforeEach(async () => {
-  await Child.deleteMany({});
-});
-
-afterEach(async () => {
-  await Child.deleteMany({});
-});
-
+})
 describe("/API/create-child", () => {
   beforeAll(async () => {
     await Child.deleteMany({});
@@ -73,7 +57,7 @@ describe("/API/create-child", () => {
     };
     const response = await supertest(app)
       .post("/API/create-child")
-      .set("Authorization", `${userOne.token}`)
+      .set("Authorization", `${token}`)
       .send(child)
       .expect(400);
     expect(response.body).toHaveProperty("message");
@@ -115,7 +99,7 @@ describe("/API/get-child", () => {
       test(testCase.testName, async () => {
         const response = await supertest(app)
           .get("/API/get-child")
-          .set("Authorization", `${userOne.token}`)
+          .set("Authorization", `${token}`)
           .query(test.query)
           .expect(200);
         expect(response.body).toHaveProperty("message");
@@ -137,7 +121,7 @@ describe("/API/update-child", () => {
     };
     const response = await supertest(app)
       .post("/API/update-child")
-      .set("Authorization", `${userOne.token}`)
+      .set("Authorization", `${token}`)
       .send({ name: newChild.name })
       .expect(400);
     expect(response.body.success).toBe(false);
@@ -146,7 +130,7 @@ describe("/API/update-child", () => {
   test(" When body is missing", async () => {
     const response = await supertest(app)
       .post("/API/update-child")
-      .set("Authorization", `${userOne.token}`)
+      .set("Authorization", `${token}`)
       .query({ id: "1387" })
       .expect(400);
     expect(response.body.success).toBe(false);
@@ -165,7 +149,7 @@ describe("/API/update-child", () => {
 
     const response = await supertest(app)
       .post("/API/update-child")
-      .set("Authorization", `${userOne.token}`)
+      .set("Authorization", `${token}`)
       .query({ id: "1387" })
       .send(newChild)
       .expect(200);
@@ -182,7 +166,7 @@ describe("/API/remove-child", () => {
   test("Id missing in query params", async () => {
     const response = await supertest(app)
       .post("/API/remove-child")
-      .set("Authorization", `${userOne.token}`)
+      .set("Authorization", `${token}`)
       .expect(400);
     expect(response.body.success).toBe(false);
 
@@ -200,13 +184,13 @@ describe("/API/remove-child", () => {
     };
     const createChildResponse = await supertest(app)
       .post("/API/create-child")
-      .set("Authorization", `${userOne.token}`)
+      .set("Authorization", `${token}`)
       .send(child)
       .expect(200);
     const removeId = createChildResponse.body.data.id;
     const response = await supertest(app)
       .post("/API/remove-child")
-      .set("Authorization", `${userOne.token}`)
+      .set("Authorization", `${token}`)
       .query({ id: removeId })
       .expect(200);
     expect(response.body.success).toBe(true);

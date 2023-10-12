@@ -14,7 +14,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "test": "cls && jest --runInBand --watchAll --coverage",
+    "test": "cls && jest --runInBand --watchAll",
     "start": "nodemon app.js"
   },
   "author": "",

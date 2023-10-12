@@ -22,23 +22,8 @@ app.use(stateRoutes);
 app.use(districtRoutes);
 app.use(childRoutes);
 
-// setupConnection()
-// .then((result) => {
-//     app.listen(3000, () => {
-//       console.log("Server listening on port 3000");
-//     });
-//   })
-//   .catch((error) => {
-//     console.error("Database connection error:", error);
-//   });
-
-
-mongoose
-  .connect(
-    "mongodb+srv://karannewuser:fEmZhME5inEdMBMv@cluster0.knsqu0p.mongodb.net/API_BUILDING?retryWrites=true&w=majority"
-  )
-  .then((result) => {
-    console.log("Database connected successfully...");
+setupConnection()
+.then((result) => {
     app.listen(3000, () => {
       console.log("Server listening on port 3000");
     });
@@ -47,4 +32,19 @@ mongoose
     console.error("Database connection error:", error);
   });
 
-// module.exports = app;
+
+// mongoose
+//   .connect(
+//     "mongodb+srv://karannewuser:fEmZhME5inEdMBMv@cluster0.knsqu0p.mongodb.net/API_BUILDING?retryWrites=true&w=majority"
+//   )
+//   .then((result) => {
+//     console.log("Database connected successfully...");
+//     app.listen(3000, () => {
+//       console.log("Server listening on port 3000");
+//     });
+//   })
+//   .catch((error) => {
+//     console.error("Database connection error:", error);
+//   });
+
+module.exports = app;

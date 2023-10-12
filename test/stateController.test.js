@@ -6,6 +6,8 @@ test("hello", () => {});
 // const app = require("../app");
 // const State = require("../modals/stateModel");
 // const supertest = require("supertest");
+// const config = require('./config/userInfo')
+
 
 // const stateOneId = new mongoose.Types.ObjectId();
 // const stateOne = {
@@ -13,18 +15,9 @@ test("hello", () => {});
 //   statename: "Test State 21",
 //   lastActive: true,
 // };
-// const userOneId = ObjectId("6524e1a2f5f7b76fb49c9988");
-// const userOne = {
-//   _id: userOneId,
-//   username: "Test User",
-//   password: "Test Password",
-//   lastActive: true,
-//   token:
-//     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTI2Nzk2MjcxNTExZjI1MDQ0ZTExODAiLCJpYXQiOjE2OTcwMjAyNTh9.y5Z0M22R-_PVt0RphfsG9fZk2HTUifNVI4BOZS8nP8M",
-// };
-
+// let token;
 // beforeAll(async () => {
-//   await State.deleteMany({});
+//     token = config.getToken()
 // });
 
 // describe("/API/create-state", () => {
@@ -32,10 +25,9 @@ test("hello", () => {});
 //     const state = { statename: stateOne.statename };
 //     const response = await supertest(app)
 //       .post("/API/create-state")
-//       .set("Authorization", `${userOne.token}`)
+//       .set("Authorization", `${token}`)
 //       .send(state)
 //       .expect(200);
-
 //     expect(response.body).toHaveProperty("message");
 //     expect(response.body.success).toBe(true);
 //   });
@@ -43,7 +35,7 @@ test("hello", () => {});
 //     const state = { statename: "" };
 //     const response = await supertest(app)
 //       .post("/API/create-state")
-//       .set("Authorization", `${userOne.token}`)
+//       .set("Authorization", `${token}`)
 //       .send(state)
 //       .expect(400);
 
@@ -61,7 +53,7 @@ test("hello", () => {});
 
 //     const response = await supertest(app)
 //       .post("/API/create-state")
-//       .set("Authorization", `${userOne.token}`)
+//       .set("Authorization", `${token}`)
 //       .send(state)
 //       .expect(400);
 //     expect(response.body.success).toBe(false);
@@ -73,7 +65,7 @@ test("hello", () => {});
 //   test("Get all states", async () => {
 //     const response = await supertest(app)
 //       .get("/API/get-state")
-//       .set("Authorization", `${userOne.token}`);
+//       .set("Authorization", `${token}`);
 //     expect(200);
 //     expect(response.body).toHaveProperty("message");
 //     expect(response.body.success).toBe(true);
@@ -85,7 +77,7 @@ test("hello", () => {});
 
 //     const response = await supertest(app)
 //       .post("/API/update-state")
-//       .set("Authorization", `${userOne.token}`)
+//       .set("Authorization", `${token}`)
 //       .send({ statename: newStateName })
 //       .expect(400);
 //     expect(response.body.success).toBe(false);
@@ -95,7 +87,7 @@ test("hello", () => {});
 //     const stateFound = await State.findOne({ statename: stateOne.statename });
 //     const response = await supertest(app)
 //       .post("/API/update-state")
-//       .set("Authorization", `${userOne.token}`)
+//       .set("Authorization", `${token}`)
 //       .query({ stateId: stateFound.id })
 //       .expect(400);
 //     expect(response.body.success).toBe(false);
@@ -108,7 +100,7 @@ test("hello", () => {});
 
 //     const response = await supertest(app)
 //       .post("/API/update-state")
-//       .set("Authorization", `${userOne.token}`)
+//       .set("Authorization", `${token}`)
 //       .query({ stateId: stateFound.id })
 //       .send({ statename: newStateName })
 //       .expect(200);
@@ -121,7 +113,7 @@ test("hello", () => {});
 //   test("stateId missing in query params", async () => {
 //     const response = await supertest(app)
 //       .post("/API/remove-state")
-//       .set("Authorization", `${userOne.token}`)
+//       .set("Authorization", `${token}`)
 //       .expect(400);
 //     expect(response.body.success).toBe(false);
 
@@ -131,13 +123,13 @@ test("hello", () => {});
 //     const state = { statename: "Remove State" };
 //     const createStateResponse = await supertest(app)
 //       .post("/API/create-state")
-//       .set("Authorization", `${userOne.token}`)
+//       .set("Authorization", `${token}`)
 //       .send(state)
 //       .expect(200);
 //     const removeId = createStateResponse.body.data.id;
 //     const response = await supertest(app)
 //       .post("/API/remove-state")
-//       .set("Authorization", `${userOne.token}`)
+//       .set("Authorization", `${token}`)
 //       .query({ stateId: removeId })
 //       .expect(200);
 //     expect(response.body.success).toBe(true);

@@ -4,6 +4,8 @@ test("hello" ,() =>{})
 // const app = require("../app");
 // const District = require("../modals/districtModel");
 // const supertest = require("supertest");
+// const config = require('./config/userInfo')
+
 
 // const districtOneId = new mongoose.Types.ObjectId();
 // const districtOne = {
@@ -12,18 +14,10 @@ test("hello" ,() =>{})
 //   State_id: "7",
 //   lastActive: true,
 // };
-// const userOneId = ObjectId("6524e1a2f5f7b76fb49c9988");
-// const userOne = {
-//   _id: userOneId,
-//   username: "Test User",
-//   password: "Test Password",
-//   lastActive: true,
-//   token:
-//     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTI2Nzk2MjcxNTExZjI1MDQ0ZTExODAiLCJpYXQiOjE2OTcwMjAyNTh9.y5Z0M22R-_PVt0RphfsG9fZk2HTUifNVI4BOZS8nP8M",
-// };
 
+// let token;
 // beforeAll(async () => {
-//   await District.deleteMany({});
+//     token = config.getToken()
 // });
 
 // describe("/API/create-district", () => {
@@ -34,7 +28,7 @@ test("hello" ,() =>{})
 //     };
 //     const response = await supertest(app)
 //       .post("/API/create-district")
-//       .set("Authorization", `${userOne.token}`)
+//       .set("Authorization", `${token}`)
 //       .send(district)
 //       .expect(200);
 //     expect(response.body).toHaveProperty("message");
@@ -46,7 +40,7 @@ test("hello" ,() =>{})
 //     for (test of tests) {
 //       const response = await supertest(app)
 //         .post("/API/create-district")
-//         .set("Authorization", `${userOne.token}`)
+//         .set("Authorization", `${token}`)
 //         .send(test)
 //         .expect(400);
 
@@ -61,7 +55,7 @@ test("hello" ,() =>{})
 //     const response = await supertest(app)
 //       .get("/API/get-district")
 //       .query({ state_id: "7" })
-//       .set("Authorization", `${userOne.token}`)
+//       .set("Authorization", `${token}`)
 //       .expect(200);
 //     expect(response.body).toHaveProperty("message");
 //     expect(response.body.success).toBe(true);
@@ -69,7 +63,7 @@ test("hello" ,() =>{})
 //   test("when stateId is missing", async () => {
 //     const response = await supertest(app)
 //       .get("/API/get-district")
-//       .set("Authorization", `${userOne.token}`);
+//       .set("Authorization", `${token}`);
 //     expect(400);
 //     expect(response.body.message).toBe("State ID missing");
 //     expect(response.body.success).toBe(false);
@@ -82,7 +76,7 @@ test("hello" ,() =>{})
 
 //     const response = await supertest(app)
 //       .post("/API/update-district")
-//       .set("Authorization", `${userOne.token}`)
+//       .set("Authorization", `${token}`)
 //       .send({ districtName: newDistrictName })
 //       .expect(400);
 //     expect(response.body.success).toBe(false);
@@ -92,7 +86,7 @@ test("hello" ,() =>{})
 //     const districtFound = await District.findOne({ districtName: districtOne.districtName });
 //     const response = await supertest(app)
 //       .post("/API/update-district")
-//       .set("Authorization", `${userOne.token}`)
+//       .set("Authorization", `${token}`)
 //       .query({ id: districtFound.id })
 //       .expect(400);
 //     expect(response.body.success).toBe(false);
@@ -104,7 +98,7 @@ test("hello" ,() =>{})
 //     const districtFound = await District.findOne({ districtName: districtOne.districtName });
 //     const response = await supertest(app)
 //       .post("/API/update-district")
-//       .set("Authorization", `${userOne.token}`)
+//       .set("Authorization", `${token}`)
 //       .query({ id: districtFound.id })
 //       .send({ districtName: newDistrictName })
 //       .expect(200);
@@ -118,7 +112,7 @@ test("hello" ,() =>{})
 //     test("Id missing in query params", async () => {
 //     const response = await supertest(app)
 //       .post("/API/remove-district")
-//       .set("Authorization", `${userOne.token}`)
+//       .set("Authorization", `${token}`)
 //       .expect(400);
 //     expect(response.body.success).toBe(false);
 
@@ -128,13 +122,13 @@ test("hello" ,() =>{})
 //     const district = { districtName: "Remove District" ,State_id: "7", };
 //     const createDistrictResponse = await supertest(app)
 //       .post("/API/create-district")
-//       .set("Authorization", `${userOne.token}`)
+//       .set("Authorization", `${token}`)
 //       .send(district)
 //       .expect(200);
 //     const removeId = createDistrictResponse.body.data.id;
 //     const response = await supertest(app)
 //       .post("/API/remove-district")
-//       .set("Authorization", `${userOne.token}`)
+//       .set("Authorization", `${token}`)
 //       .query({ id: removeId })
 //       .expect(200);
 //     expect(response.body.success).toBe(true);

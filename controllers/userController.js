@@ -30,9 +30,6 @@ exports.signUp = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "User Signed Up !!! ",
-      data: newUser,
-      loginId: newUser._id,
-      lastActive: newUser.lastActive,
       timeStamp: moment().unix(),
     });
   } catch (error) {
@@ -41,7 +38,7 @@ exports.signUp = async (req, res, next) => {
   }
 };
 
-function generateToken(id) {
+const generateToken =(id)=> {
   return jwt.sign(
     // { userId: newUser._id,exp: Math.floor(Date.now() / 1000) + (30 * 60), },
     { id },
@@ -61,21 +58,18 @@ exports.logIn = async (req, res, next) => {
     if (!user) {
       throw Error("User not found");
     } else {
-      bcrypt.compare(password, user.password, (error, result) => {
-        if (result === true) {
+      bcrypt.compare(password, user.password)
+       
           res.status(200).json({
             success: true,
             message: "User logged in !!! ",
             token: generateToken({ userId: user._id }),
-            data: user,
-            loginId: user._id,
-            lastActive: user.lastActive,
             timeStamp: moment().unix(),
           });
-        } else {
-          throw Error("User not authorized");
-        }
-      });
+      //   // } else {
+      //   //   throw Error("User not authorized");
+      //   // }
+      // });
     }
   } catch (error) {
     // console.log(error);
@@ -103,3 +97,5 @@ exports.logOut = async (req, res, next) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+module.exports.generateToken = generateToken;

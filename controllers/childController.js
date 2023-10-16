@@ -1,10 +1,23 @@
+const redis = require("redis");
 const { json } = require("body-parser");
 const Child = require("../modals/childModel");
 const moment = require("moment");
+const client = require("../app").client;
 
 exports.getallChild = async (req, res, next) => {
   try {
     const { id, sex, dob, state_id, district_id, name } = req.query;
+    const cacheKey = JSON.stringify(req.query);
+
+    const cachedData = await client.get(cacheKey);
+    if (cachedData) {
+      return res.status(200).json({
+        success: true,
+        message: "Child Profile Detail",
+        timeStamp: moment().unix(),
+        data: JSON.parse(cachedData),
+      });
+    }
 
     let result;
     const filter = { isActive: true };
@@ -28,6 +41,9 @@ exports.getallChild = async (req, res, next) => {
     } else {
       result = await Child.find(filter);
     }
+    // console.log("result is >>>>>" , result)
+
+    client.set(cacheKey, JSON.stringify(result));
     res.status(200).json({
       success: true,
       message: "Child Profile Detail",

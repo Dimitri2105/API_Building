@@ -6,8 +6,9 @@
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.29.4",
     "mongodb": "^6.1.0",
-    "mongoose": "^5.13.20",
+    "mongoose": "^7.6.1",
     "nodemon": "^3.0.1",
+    "redis": "^4.6.10",
     "supertest": "^6.3.3"
   },
   "name": "api_building",
@@ -26,4 +27,3 @@
     "jest": "^29.7.0"
   }
 }
-
